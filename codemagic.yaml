@@ -5,7 +5,7 @@ workflows:
     environment:
       vars:
         # point to your app inside the repo:
-        PROJECT_PATH: "C:\Users\hp\StudioProjects\qubey.ai\app00"
+        PROJECT_PATH: "StudioProjects\qubey.ai\app00"
       flutter: stable
       # Set JAVA_HOME for AGP requiring Java 11
       # (Codemagic linux images typically have java 11 paths; we'll export it)
