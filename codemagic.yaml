@@ -1,0 +1,43 @@
+workflows:
+  flutter-android:
+    name: Flutter Android - app00
+    max_build_duration: 120
+    environment:
+      vars:
+        # point to your app inside the repo:
+        PROJECT_PATH: "C:\Users\hp\StudioProjects\qubey.ai\app00"
+      flutter: stable
+      # Set JAVA_HOME for AGP requiring Java 11
+      # (Codemagic linux images typically have java 11 paths; we'll export it)
+      variables:
+        JAVA_HOME: "/usr/lib/jvm/java-11-openjdk"
+    scripts:
+      - name: Print environment
+        script: |
+          echo "Project path: $PROJECT_PATH"
+          pwd
+          ls -la $PROJECT_PATH
+      - name: Use Java 11
+        script: |
+          export JAVA_HOME=${JAVA_HOME}
+          java -version
+      - name: Install Flutter dependencies
+        script: |
+          cd $PROJECT_PATH
+          flutter --version
+          flutter pub get
+      - name: Clean previous build artifacts
+        script: |
+          cd $PROJECT_PATH
+          flutter clean
+          rm -rf android/.gradle || true
+      - name: Build Android app bundle
+        script: |
+          cd $PROJECT_PATH
+          flutter build appbundle --release --no-shrink
+    artifacts:
+      - $PROJECT_PATH/build/app/outputs/*/.aab
+    publishing:
+      google_play:
+        # configure publishing only when you add secrets and connect Play Console
+        enabled: false
