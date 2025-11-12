@@ -5,7 +5,7 @@ workflows:
     environment:
       vars:
         # point to your app inside the repo:
-        PROJECT_PATH: "qubey.ai\app00"
+        PROJECT_PATH: "app00"
       flutter: stable
       # Set JAVA_HOME for AGP requiring Java 11
       # (Codemagic linux images typically have java 11 paths; we'll export it)
@@ -34,10 +34,10 @@ workflows:
       - name: Build Android app bundle
         script: |
           cd $PROJECT_PATH
-          flutter build appbundle --release --no-shrink
+          flutter build apk --release --no-shrink
     artifacts:
-      - $PROJECT_PATH/build/app/outputs/*/.aab
-    publishing:
-      google_play:
+      - $PROJECT_PATH/build/app/outputs/*/.apk
+    publishing:{}
+      # google_play:
         # configure publishing only when you add secrets and connect Play Console
-        enabled: false
+        # enabled: false
